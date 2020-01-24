@@ -1,10 +1,13 @@
 import React from 'react';
     import ReactDOM from 'react-dom';
+    import PropTypes from 'prop-types';
+    
+
 
     // Add css files
     import 'bootstrap/dist/css/bootstrap.min.css'; // CSS from Bootstrap
-    import 'font-awesome/css/font-awesome.min.css'; // CSS from FontAwesome
-    import './index.css'; // My own CSS
+    import '../src/index.css'; // My own CSS
+    
 
     // Add js files
     import 'jquery';
@@ -12,21 +15,52 @@ import React from 'react';
     import 'bootstrap';
 
 
-    const Home = (props) => {
-        return (
-            <div className="container">
-                <div className="row">
-                    <div className="col-md-12 d-flex justify-content-center">
-                        <i className="fa fa-html5 fa-5x"></i>
-                    </div>
+    const SimpleCounter = (props) => {
+        return (<div className="bigCounter">           
+                <div className="calendar">
+                <i className="far fa-clock"></i>
                 </div>
-                <div className="row">
-                    <div className="col-md-12 d-flex justify-content-center">
-                        <p className="text-success">Welcome to Webpack, Bootstrap and ReactJS</p>
-                    </div>
-                </div>
-            </div>
-        )
-    }
+                <div className="six">{props.digitSix % 10}</div>
+                <div className="five">{props.digitFive % 10}</div>
+                <div className="four">{props.digitFour % 10}</div>
+                <div className="three">{props.digitThree % 10}</div>
+                <div className="two">{props.digitTwo % 10}</div>
+                <div className="one">{props.digitOne % 10}</div>
+             </div>)
+    } // Pasar los props a los digitos
 
-    ReactDOM.render(<Home />, document.querySelector("#root"));
+    SimpleCounter.propTypes = {
+        digitSix: PropTypes.number,
+        digitFive: PropTypes.number,
+        digitFour: PropTypes.number,
+        digitThree: PropTypes.number,
+        digitTwo: PropTypes.number,
+        digitOne: PropTypes.number
+    };
+
+
+
+// calcular
+let counter = 0; 
+setInterval(function(){
+    const six = Math.floor(counter/100000);
+    const five = Math.floor(counter/10000);
+    const four = Math.floor(counter/1000);
+    const three = Math.floor(counter/100);
+    const two = Math.floor(counter/10);
+    const one = Math.floor(counter/1);
+    
+    counter++;
+        //render
+        ReactDOM.render(
+            <SimpleCounter digitOne={one} digitTwo={two} digitThree={three} digitFour={four} digitFive={five} digitSix={six} />, 
+                document.querySelector("#root")
+        );
+
+},1000); 
+
+
+
+
+
+        
